@@ -1,5 +1,7 @@
 from django.db import models
 from contractor.models import Contractor
+from django.core.exceptions import ValidationError
+
 from company.models import Company
 from product.models import Product
 
@@ -30,6 +32,26 @@ class Price(models.Model):
                 name='price_must_have_entity'
             )
         ]
+
+    def clean(self):
+        """Validación a nivel de modelo: evita duplicados"""
+        if self.company:
+            exists = Price.objects.filter(
+                product=self.product, company=self.company
+            ).exclude(pk=self.pk).exists()
+            if exists:
+                raise ValidationError(
+                    f'A price for "{self.product.name}" already exists for the company {self.company}.'
+                )
+
+        if self.contractor:
+            exists = Price.objects.filter(
+                product=self.product, contractor=self.contractor
+            ).exclude(pk=self.pk).exists()
+            if exists:
+                raise ValidationError(
+                    f'A price for "{self.product.name}" already exists for the contractor {self.contractor}.'
+                )
 
     def __str__(self):
         target = self.company if self.company else self.contractor

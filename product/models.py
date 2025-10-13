@@ -5,3 +5,6 @@ class Product(models.Model):
     """ Model de producto """
     name = models.CharField("Name", max_length=250)
     description  = models.TextField("Description")
+
+    def __str__(self):
+        return self.name
