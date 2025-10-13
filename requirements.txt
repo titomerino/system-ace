@@ -1,0 +1,17 @@
+# Framework principal
+Django==5.1.1
+
+psycopg2-binary==2.9.9
+python-dotenv==1.0.1
+
+# API REST Framework
+# djangorestframework==3.15.2
+
+# CORS (para permitir peticiones desde otros dominios)
+# django-cors-headers==4.4.0
+
+# Servidor WSGI de producción
+# gunicorn==23.0.0
+
+# Extensiones útiles para desarrollo (opcional)
+# django-extensions==3.2.3
