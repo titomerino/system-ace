@@ -10,4 +10,7 @@ class Company(models.Model):
     contact = models.CharField("Contact", max_length=150)
     address = models.TextField("Address", blank=True, null=True)
     other  = models.TextField("Other")
+
+    def __str__(self):
+        return self.name
     

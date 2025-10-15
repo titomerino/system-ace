@@ -35,16 +35,17 @@ class Price(models.Model):
 
     def clean(self):
         """Validación a nivel de modelo: evita duplicados"""
-        if self.company:
+        if self.company_id:
             exists = Price.objects.filter(
-                product=self.product, company=self.company
+                product=self.product,
+                company_id=self.company_id
             ).exclude(pk=self.pk).exists()
             if exists:
                 raise ValidationError(
                     f'A price for "{self.product.name}" already exists for the company {self.company}.'
                 )
 
-        if self.contractor:
+        if self.contractor_id:
             exists = Price.objects.filter(
                 product=self.product, contractor=self.contractor
             ).exclude(pk=self.pk).exists()
