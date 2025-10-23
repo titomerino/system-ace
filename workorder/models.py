@@ -28,7 +28,7 @@ class WorkOrder(models.Model):
     products = models.ManyToManyField(Product, through='ItemOrder')
 
     def __str__(self):
-        return f"Order {self.number_order} - {self.client_name}"
+        return f"Order {self.number_order} - {self.company.name}"
     
 
 class ItemOrder(models.Model):
@@ -39,5 +39,5 @@ class ItemOrder(models.Model):
     quantity = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f"{self.product.name}"
+        return f"{self.product.name} ( {self.work_order.company.name} -- Order #{self.work_order.number_order})"
     
