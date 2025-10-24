@@ -17,7 +17,8 @@ class CompanyAdmin(admin.ModelAdmin):
         "email",
         "contact",
     )
-
+    list_per_page = 12
+    search_fields = ("name",)
     fieldsets = (
         ('Information', {
             'fields': (

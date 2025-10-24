@@ -64,6 +64,7 @@ class PaymentOrderAdmin(admin.ModelAdmin):
             "classes": ("wide",),
         }),
     )
+    list_per_page = 12
 
     def colored_state(self, obj):
         """Show state with color badge."""

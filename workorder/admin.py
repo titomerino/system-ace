@@ -8,6 +8,31 @@ class ItemOrderInline(admin.TabularInline):
     model = ItemOrder
     extra = 1
     search_fields = ["name", "product__name"]
+    readonly_fields = ("item_total_display",)
+    list_per_page = 12
+
+    def item_total_display(self, obj):
+        """Muestra el costo total del ítem (cantidad * precio del producto según la compañía)."""
+        if not obj.work_order_id or not obj.product_id:
+            return "-"
+
+        price = Price.objects.filter(
+            product=obj.product,
+            company=obj.work_order.company
+        ).first()
+
+        if not price:
+            return format_html('<span style="color:#d9534f;">No price found</span>')
+
+        try:
+            total = float(price.value) * float(obj.quantity or 0)
+            total_str = "${:,.2f}".format(total)
+            return format_html("<strong>{}</strong>", total_str)
+        except Exception as e:
+            return format_html(f'<span style="color:#d9534f;">Error: {e}</span>')
+
+    item_total_display.short_description = "Item Total"
+
 
 
 @admin.register(WorkOrder)
