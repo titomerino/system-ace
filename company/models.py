@@ -11,6 +11,10 @@ class Company(models.Model):
     address = models.TextField("Address", blank=True, null=True)
     other  = models.TextField("Other")
 
+    class Meta:
+        verbose_name = "company"
+        verbose_name_plural = "companies"
+
     def __str__(self):
         return self.name
     
