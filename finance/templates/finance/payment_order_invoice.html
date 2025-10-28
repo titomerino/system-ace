@@ -9,6 +9,7 @@
         .total { font-weight: bold; font-size: 1.2em; }
         table {border-collapse: collapse;width: 100%;}
         th, tr, td {padding: 0.4rem 0.5rem;}
+        .text-right {text-align: right;}
     </style>
 </head>
 <body>
@@ -66,9 +67,9 @@
             {% for item in obj.payment.items_order.all %}
             <tr>
                 <td>{{item.product.name}}</td>
-                <td>{{item.quantity}} {{item.unit}}</td>
-                <td>${{item.get_price_contractor|floatformat:2}}</td>
-                <td>${{item.get_total_price_contractor|floatformat:2}}</td>
+                <td class="text-right">{{item.quantity}} {{item.unit}}</td>
+                <td class="text-right">${{item.get_price_contractor|floatformat:2}}</td>
+                <td class="text-right">${{item.get_total_price_contractor|floatformat:2}}</td>
             </tr>
             {% endfor %}
         </tbody>

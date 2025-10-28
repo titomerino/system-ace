@@ -10,9 +10,9 @@ class FinanceAdmin(admin.ModelAdmin):
     def entity_info(self, obj):
         """Muestra datos según la relación existente"""
         if obj.work_order:
-            crew = obj.work_order.crew or "—"
+            job = obj.work_order.job or "—"
             company = getattr(obj.work_order.company, "name", "—")
-            return f"{crew} — {company}"
+            return f"{job} — {company}"
         elif obj.payment:
             job = obj.payment.job or "—"
             contractor = getattr(obj.payment.contractor, "name", "—")
@@ -39,5 +39,5 @@ class FinanceAdmin(admin.ModelAdmin):
         )
 
     print_invoice.short_description = "Print Invoice"
-    entity_info.short_description = "Entidad (Crew/Company o Job/Contractor)"
+    entity_info.short_description = "Entidad (Job/Company o Job/Contractor)"
     colored_total.short_description = "Total"

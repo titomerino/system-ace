@@ -17,24 +17,23 @@ class WorkOrderAdmin(admin.ModelAdmin):
         "display_order",
         "client_name",
         "assigned_date",
-        "crew_start_date",
-        "crew_end_date",
+        "job_start_date",
+        "job_end_date",
         "colored_state",
         "total_order"
     )
     list_filter = (
         "state",
     )
-    search_fields = ("client_name", "number_order", "number_job")
+    search_fields = ("client_name", "invoice", "job")
     fieldsets = (
         ('Order', {
             'fields': (
                 ('company',),
-                ('number_job', 'number_order'),
-                ('crew', 'state'),
+                ('job', 'invoice'),
                 ('assigned_date',),
-                ('crew_start_date',),
-                ('crew_end_date',),
+                ('job_start_date', 'job_end_date',),
+                ('state'),
             ),
             'classes': ('wide',),
         }),

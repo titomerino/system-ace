@@ -36,9 +36,9 @@ class Finance(models.Model):
 
     def __str__(self):
         if self.work_order:
-            crew = self.work_order.crew or "No crew"
+            job = self.work_order.job or "No job"
             company = getattr(self.work_order.company, "name", "No company")
-            return f"{crew} — {company}"
+            return f"{job} — {company}"
         elif self.payment:
             job = self.payment.job or "No job"
             contractor = getattr(self.payment.contractor, "name", "No contractor")

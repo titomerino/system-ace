@@ -16,12 +16,11 @@ class WorkOrder(models.Model):
     ]
 
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    number_order = models.CharField("Order #", max_length=150)
-    number_job = models.CharField("Job #", max_length=150)
+    invoice = models.CharField("Invoice", max_length=150)
+    job = models.CharField("Job", max_length=150)
     assigned_date = models.DateField("Assigned")
-    crew = models.CharField("Crew", max_length=150)
-    crew_start_date = models.DateField("Crew Start", blank=True, null=True)
-    crew_end_date = models.DateField("Crew End", blank=True, null=True)
+    job_start_date = models.DateField("Job Start Date", blank=True, null=True)
+    job_end_date = models.DateField("Job End Date", blank=True, null=True)
     address = models.TextField()
     instructions = models.TextField(blank=True, null=True)
     client_name = models.CharField(max_length=255)
@@ -31,7 +30,7 @@ class WorkOrder(models.Model):
     products = models.ManyToManyField(Product, through='ItemOrder')
 
     def __str__(self):
-        return f"Order {self.number_order} - {self.company.name}"
+        return f"Order {self.invoice} - {self.company.name}"
     
     @property
     def items(self):
@@ -62,7 +61,7 @@ class ItemOrder(models.Model):
     quantity = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f"{self.product.name} ( {self.work_order.company.name} -- Order #{self.work_order.number_order})"
+        return f"{self.product.name} ( {self.work_order.company.name} -- Order #{self.work_order.invoice})"
     
     def get_price_company(self):
         """
