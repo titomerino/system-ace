@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Factura #{{ obj.pk }}</title>
+    <style>
+        body { font-family: Arial, sans-serif;font-size: 14px; margin: 20px; }
+        h1 { color: #333; }
+        .total { font-weight: bold; font-size: 1.2em; }
+        table {border-collapse: collapse;width: 100%;}
+        th, tr, td {padding: 0.4rem 0.5rem;}
+    </style>
+</head>
+<body>
+    <h1>ACE CONSTRUCTION LLC</h1>
+    <table border="1">
+        <tbody>
+            <tr>
+                <td><strong>ADDRESS:</strong></td>
+                <td colspan="3">5212 S Genoa Way Centennial CO 80015</td>
+            </tr>
+            <tr>
+                <td><strong>PHONE:</strong></td>
+                <td colspan="3">720 651 79 82</td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br>
+    <table border="1">
+        <tbody>
+            <tr>
+                <td><strong>JOB:</strong></td>
+                <td>{{obj.payment.job}}</td>
+                <td><strong>INVOICE #:</strong></td>
+                <td>{{obj.payment.invoice}}</td>
+            </tr>
+            <tr>
+                <td><strong>TO:</strong></td>
+                <td>{{obj.payment.contractor.name}}</td>
+                <td><strong>DATE:</strong></td>
+                <td>{{obj.payment.assigned_date}}</td>
+            </tr>
+            <tr>
+                <td><strong>PHONE:</strong></td>
+                <td>{{obj.payment.contractor.phone}}</td>
+                <td><strong>STATUS:</strong></td>
+                <td>DONE</td>
+            </tr>
+            <tr>
+                <td><strong>ADDRESS JOB:</strong></td>
+                <td colspan="4">4889 JOPLIN COURT, DENVER, CO 80239</td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Qty U/M</th>
+                <th>Price/SQ/LF</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in obj.payment.items_order.all %}
+            <tr>
+                <td>{{item.product.name}}</td>
+                <td>{{item.quantity}} {{item.unit}}</td>
+                <td>${{item.get_price_contractor|floatformat:2}}</td>
+                <td>${{item.get_total_price_contractor|floatformat:2}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p class="total" style="text-align: right;">Total: ${{ obj.total }}</p>
+</body>
+</html>
